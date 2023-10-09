@@ -7,4 +7,7 @@ sealed class NavigationScreen(val route : String){
     object MovieInfoScreen : NavigationScreen("MovieInfoScreen")
 
     object ArtistInfoScreen : NavigationScreen("ArtistInfoScreen")
+
+    object SearchScreen : NavigationScreen("SearchScreen")
+
 }

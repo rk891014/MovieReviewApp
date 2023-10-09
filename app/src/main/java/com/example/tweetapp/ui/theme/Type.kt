@@ -1,43 +1,32 @@
 package com.example.tweetapp.ui.theme
 
-import androidx.compose.material3.Typography
+import androidx.compose.material.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-// Set of Material typography styles to start with
 val Typography = Typography(
-    bodyLarge = TextStyle(
+    body1 = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
-    )
-    /* Other default text styles to override
-    titleLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 22.sp,
-        lineHeight = 28.sp,
-        letterSpacing = 0.sp
+        fontSize = 16.sp
     ),
-    labelSmall = TextStyle(
+    button = TextStyle(
         fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Medium,
-        fontSize = 11.sp,
-        lineHeight = 16.sp,
-        letterSpacing = 0.5.sp
+        fontWeight = FontWeight.W500,
+        fontSize = 14.sp
+    ),
+    caption = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Normal,
+        fontSize = 12.sp
     )
-    */
-
 
 )
 
-
-val kotlin.text.Typography.subTitlePrimary: TextStyle
+val Typography.subTitlePrimary: TextStyle
     @Composable
     get() {
         return TextStyle(
@@ -45,5 +34,25 @@ val kotlin.text.Typography.subTitlePrimary: TextStyle
             color = FontColor,
             fontSize = 14.sp,
             fontWeight = FontWeight.Medium
+        )
+    }
+
+val Typography.subTitleSecondary: TextStyle
+    @Composable
+    get() {
+        return TextStyle(
+            fontFamily = FontFamily.Default,
+            color = SecondaryFontColor,
+            fontSize = 10.sp,
+        )
+    }
+
+val Typography.bioGrapyText: TextStyle
+    @Composable
+    get() {
+        return TextStyle(
+            fontFamily = FontFamily.Default,
+            color = SecondaryFontColor,
+            fontSize = 14.sp,
         )
     }

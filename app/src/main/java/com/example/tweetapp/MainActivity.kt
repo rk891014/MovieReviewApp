@@ -3,7 +3,7 @@ package com.example.tweetapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.example.tweetapp.navigation.AppNavigationController
+import com.example.tweetapp.screens.mainscreen.MainScreen
 import com.example.tweetapp.ui.theme.TweetAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -14,7 +14,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TweetAppTheme {
-                AppNavigationController()
+                MainScreen()
             }
         }
     }

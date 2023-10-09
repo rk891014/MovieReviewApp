@@ -9,7 +9,7 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class MovieDataSource @Inject constructor(private val apiService: ApiService) :
+class MovieDataSource @Inject constructor(private val apiService: ApiService,private val genreId : Int) :
         PagingSource<Int, Result>() {
     override fun getRefreshKey(state: PagingState<Int, Result>): Int? {
         return state.anchorPosition
@@ -18,12 +18,13 @@ class MovieDataSource @Inject constructor(private val apiService: ApiService) :
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Result> {
         return try {
             val nextPage = params.key ?: 1
-            val movieResult : MovieData = apiService.getCategories(nextPage)
+            val movieResult : MovieData = if(genreId == -1) apiService.getAllMovies(nextPage)
+                                            else apiService.getCategorizedMovies(genreId,nextPage)
             movieResult.results.let {list->
                 LoadResult.Page(
-                    data = list as List<Result>,
+                    data = list,
                     prevKey = if (nextPage == 1) null else nextPage - 1,
-                    nextKey =  if (movieResult.results?.isNotEmpty() == true) movieResult.page?.plus(1) else  null
+                    nextKey =  if (movieResult.results.isNotEmpty()) movieResult.page.plus(1) else  null
                 )
             }
         } catch (exception: IOException) {

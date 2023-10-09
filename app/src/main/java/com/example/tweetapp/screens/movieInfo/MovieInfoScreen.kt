@@ -1,6 +1,5 @@
 package com.example.tweetapp.screens.movieInfo
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,7 +15,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Text
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -39,7 +38,7 @@ import com.example.tweetapp.model.artist.Cast
 import com.example.tweetapp.model.movies.MovieData
 import com.example.tweetapp.model.movies.Result
 import com.example.tweetapp.repository.DataState
-import com.example.tweetapp.screens.mainscreen.MovieItemView
+import com.example.tweetapp.screens.generalscreens.MovieItemView
 import com.example.tweetapp.ui.component.SubtitlePrimary
 import com.example.tweetapp.ui.component.SubtitleSecondary
 import com.example.tweetapp.utils.AppConstant
@@ -66,9 +65,11 @@ fun MovieInfoScreen(navController: NavHostController, movieId: Int?) {
 
     LaunchedEffect(key1 = Unit){
         movieId?.let {
-            movieInfoViewModel.movieData(it)
-            movieInfoViewModel.recommendedMovies(it)
-            movieInfoViewModel.movieCredit(it)
+            if (movieDetail.value == null || recommendedMovie.value == null || artist.value == null) {
+                movieInfoViewModel.movieData(it)
+                movieInfoViewModel.recommendedMovies(it)
+                movieInfoViewModel.movieCredit(it)
+            }
         }
     }
 
@@ -114,9 +115,11 @@ fun ShowArtistList(navController: NavHostController, artistList: DataState<Artis
 @Composable
 fun ArtistItemView(navController: NavHostController, artist: Cast) {
     Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.padding(10.dp).clickable {
-            navController.navigate(NavigationScreen.ArtistInfoScreen.route.plus("/${artist.id}"))
-        }) {
+        modifier = Modifier
+            .padding(10.dp)
+            .clickable {
+                navController.navigate(NavigationScreen.ArtistInfoScreen.route.plus("/${artist.id}"))
+            }) {
         CoilImage(
             modifier = Modifier
                 .fillMaxWidth()

@@ -1,6 +1,5 @@
 package com.example.tweetapp.screens.artistinfo
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,8 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -19,15 +18,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.tweetapp.R
-import com.example.tweetapp.model.artist.Cast
 import com.example.tweetapp.model.artistdetails.ArtistDetail
 import com.example.tweetapp.repository.DataState
 import com.example.tweetapp.ui.component.SubtitlePrimary
@@ -70,12 +65,12 @@ fun ArtistDetails(artistDetails: DataState<ArtistDetail>) {
             Row(
                 modifier = Modifier
                     .padding(10.dp)
-                    .height(270.dp)
             ) {
                 CoilImage(
                     modifier = Modifier
                         .fillMaxWidth(0.5f)
-                        .height(250.dp)
+                        .height(270.dp)
+                        .padding(0.dp,20.dp,0.dp,0.dp)
                         .clip(RoundedCornerShape(10.dp)),
                     imageModel = {  AppConstant.IMAGE_URL.plus(artistDetails.data.profilePath) },
                     imageOptions = ImageOptions(
@@ -100,7 +95,6 @@ fun ArtistDetails(artistDetails: DataState<ArtistDetail>) {
                         .fillMaxSize()
                         .padding(10.dp, 0.dp, 0.dp, 0.dp)
                 ) {
-
                     Text(
                         text = artistDetails.data.name, fontSize = 22.sp, color = Color.Black,
                         fontWeight = FontWeight.Bold, modifier = Modifier.padding(6.dp)
@@ -132,7 +126,7 @@ fun ArtistDetails(artistDetails: DataState<ArtistDetail>) {
                 text = artistDetails.data.biography,
                 color = Color.Gray,
                 fontSize = 14.sp,
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.h2,
                 modifier = Modifier.padding(10.dp)
             )
 

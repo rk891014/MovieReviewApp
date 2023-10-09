@@ -6,8 +6,8 @@ import androidx.paging.PagingData
 import com.example.tweetapp.api.ApiService
 import com.example.tweetapp.datasource.MovieDataSource
 import com.example.tweetapp.model.artist.Artist
-import com.example.tweetapp.model.artist.Cast
 import com.example.tweetapp.model.artistdetails.ArtistDetail
+import com.example.tweetapp.model.moviegenre.MovieGenres
 import com.example.tweetapp.model.movies.MovieData
 import com.example.tweetapp.model.movies.Result
 import kotlinx.coroutines.flow.Flow
@@ -27,10 +27,20 @@ class MovieRepository @Inject constructor(private val apiService: ApiService) {
 //        }
 //    }
 
-    fun movieDetailList(): Flow<PagingData<Result>> = Pager(
-        pagingSourceFactory = { MovieDataSource(apiService) },
+    fun movieDetailList(genre: Int): Flow<PagingData<Result>> = Pager(
+        pagingSourceFactory = { MovieDataSource(apiService,genre) },
         config = PagingConfig(pageSize = 10)
     ).flow
+
+    suspend fun getSearchedMovieList(searchedText: String): Flow<DataState<MovieData>> = flow {
+        emit(DataState.Loading)
+        try {
+            val movieResult = apiService.getSearchedMovies(searchedText,1)
+            emit(DataState.Success(movieResult))
+        } catch (e: Exception) {
+            emit(DataState.Error(e))
+        }
+    }
 
     suspend fun movieDetail(movieId: Int): Flow<DataState<Result>> = flow {
         emit(DataState.Loading)
@@ -71,6 +81,18 @@ class MovieRepository @Inject constructor(private val apiService: ApiService) {
             emit(DataState.Error(e))
         }
     }
+
+    fun movieGenreList(): Flow<DataState<MovieGenres>> = flow {
+        emit(DataState.Loading)
+        try {
+            val genres = apiService.getGenres()
+            emit(DataState.Success(genres))
+        } catch (e: Exception) {
+            emit(DataState.Error(e))
+        }
+    }
+
+
 
 
 }
