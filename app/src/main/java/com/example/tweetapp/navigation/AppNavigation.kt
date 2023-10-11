@@ -40,7 +40,7 @@ fun AppNavigation(
         composable(route = NavigationScreen.ArtistInfoScreen.route.plus("/{artistId}"), arguments = listOf(
             navArgument("artistId"){ type = NavType.IntType })) {
             val artistId = it.arguments?.getInt("artistId")
-            ArtistInfoScreen(navController,artistId)
+            ArtistInfoScreen(artistId)
         }
 
         composable(route = NavigationScreen.SearchScreen.route) {
