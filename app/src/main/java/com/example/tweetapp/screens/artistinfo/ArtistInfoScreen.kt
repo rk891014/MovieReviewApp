@@ -97,7 +97,7 @@ fun ArtistDetails(artistDetails: DataState<ArtistDetail>) {
                         .padding(10.dp, 0.dp, 0.dp, 0.dp)
                 ) {
                     Text(
-                        text = artistDetails.data.name, fontSize = 22.sp, color = Color.Black,
+                        text = artistDetails.data.name, fontSize = 22.sp,
                         fontWeight = FontWeight.Bold, modifier = Modifier.padding(6.dp)
                     )
                     Column(modifier = Modifier.padding(6.dp)) {

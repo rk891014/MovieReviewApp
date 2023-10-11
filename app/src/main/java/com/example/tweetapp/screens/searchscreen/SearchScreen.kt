@@ -81,7 +81,7 @@ fun ShowEmptyList() {
         Icon(Icons.Filled.ContentPasteSearch, tint = Color.Blue,
             contentDescription = "Empty", modifier = Modifier.size(48.dp))
         Spacer(modifier = Modifier.size(20.dp))
-        Text(text = "Nothing To Show", color = Color.Black)
+        Text(text = "Nothing To Show", fontSize = 18.sp)
     }
 }
 

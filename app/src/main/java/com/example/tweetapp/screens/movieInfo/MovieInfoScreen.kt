@@ -102,7 +102,7 @@ fun ShowPageData(
 fun ShowArtistList(navController: NavHostController, artistList: DataState<Artist>) {
     if(artistList is DataState.Success<Artist> && artistList.data.cast.isNotEmpty()){
         Column {
-            Text(text = "Cast", color = Color.Black, fontSize = 18.sp,
+            Text(text = "Cast", fontSize = 18.sp,
                 fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(10.dp))
             LazyRow(modifier = Modifier.padding(5.dp,0.dp,0.dp,0.dp),content = {
                 items(artistList.data.cast){
@@ -154,7 +154,7 @@ fun ArtistItemView(navController: NavHostController, artist: Cast) {
 fun ShowRecommendedMovies(navController: NavHostController, movies: DataState<MovieData>) {
     if(movies is DataState.Success<MovieData> && movies.data.results.isNotEmpty()){
         Column {
-            Text(text = "Similar", color = Color.Black, fontSize = 18.sp,
+            Text(text = "Similar", fontSize = 18.sp,
                 fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(10.dp))
             LazyRow(modifier = Modifier.padding(5.dp,0.dp,0.dp,0.dp),content = {
                 items(movies.data.results){
@@ -200,7 +200,6 @@ fun ShowMovieInfoData(movie: DataState<Result>) {
                     Text(
                         text = it,
                         modifier = Modifier.padding(top = 10.dp),
-                        color = Color.Black,
                         fontSize = 24.sp,
                         fontWeight = FontWeight.W700,
                         maxLines = 1,
@@ -232,7 +231,6 @@ fun ShowMovieInfoData(movie: DataState<Result>) {
                 }
                 Text(
                     text = "Description",
-                    color = Color.Black,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.SemiBold
                 )
