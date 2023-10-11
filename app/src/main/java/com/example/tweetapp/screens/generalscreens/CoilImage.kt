@@ -32,6 +32,24 @@ import com.skydoves.landscapist.components.rememberImageComponent
 import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 
 @Composable
+fun FailureImage(item: Result) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize(1f)
+                .paint(
+                    painter = painterResource(id = R.drawable.defaultbackground),
+                    contentScale = ContentScale.Crop
+                ),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            item.title?.let { it1 ->
+                ShowFailureImage(item.original_language, it1)
+            }
+        }
+
+}
+@Composable
 fun CoilImage(navController: NavHostController, item: Result, imageHeight: Dp, imageWidth: Dp) {
     CoilImage(
         modifier = Modifier
@@ -40,22 +58,7 @@ fun CoilImage(navController: NavHostController, item: Result, imageHeight: Dp, i
             .clickable {
                 navController.navigate(NavigationScreen.MovieInfoScreen.route.plus("/${item.id}"))
             },
-        failure = {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize(1f)
-                    .paint(
-                        painter = painterResource(id = R.drawable.defaultbackground),
-                        contentScale = ContentScale.Crop
-                    ),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                item.title?.let { it1 ->
-                    ShowFailureImage(item.original_language, it1)
-                }
-            }
-        },
+        failure = {FailureImage(item)},
         imageModel = { AppConstant.IMAGE_URL.plus(item.poster_path) },
         imageOptions = ImageOptions(
             contentScale = ContentScale.Crop,

@@ -30,7 +30,7 @@ fun DrawerBody(list: ArrayList<Genre>, drawerClose: (Int) -> Unit) {
         items(list){
             Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(vertical = 6.dp).clickable
             { drawerClose(it.id) }.fillMaxSize()) {
-                Icon(Icons.Default.AirplaneTicket, contentDescription = "movie", tint = Color.Green)
+                Icon(Icons.Default.AirplaneTicket, contentDescription = "movie", tint = Color.Blue.copy(alpha = .5f))
                 Spacer(modifier = Modifier.width(20.dp))
                 Text(text = it.name, fontSize = 20.sp)
             }

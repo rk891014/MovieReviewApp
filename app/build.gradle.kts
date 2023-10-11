@@ -106,4 +106,8 @@ dependencies {
 
 // pagination
     implementation("androidx.paging:paging-compose:3.2.1")
+
+//    splash screen
+    implementation("androidx.core:core-splashscreen:1.0.1")
+
 }

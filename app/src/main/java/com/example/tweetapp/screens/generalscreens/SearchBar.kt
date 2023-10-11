@@ -36,9 +36,10 @@ fun SearchBar(onTextChanged: (String) -> Unit,popBackStack: () -> Boolean) {
                 .focusRequester(focusRequester),
             value = text,
             colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = Color.LightGray,
-                cursorColor = Color.Black,
-                disabledLabelColor = Color.Gray,
+                textColor = Color.White,
+                backgroundColor = Color.Blue.copy(alpha = 0.6f),
+                cursorColor = Color.White,
+                disabledLabelColor = Color.Transparent,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent
             ),
@@ -48,7 +49,7 @@ fun SearchBar(onTextChanged: (String) -> Unit,popBackStack: () -> Boolean) {
             },
             singleLine = true,
             leadingIcon = {
-                Icon(imageVector = Icons.Filled.ArrowBack, tint = Color.Black, contentDescription = "Back",modifier = Modifier
+                Icon(imageVector = Icons.Filled.ArrowBack, tint = Color.White, contentDescription = "Back",modifier = Modifier
                     .padding(end = 16.dp)
                     .offset(x = 10.dp)
                     .clickable {
@@ -58,7 +59,7 @@ fun SearchBar(onTextChanged: (String) -> Unit,popBackStack: () -> Boolean) {
             trailingIcon = {
                 if (text.trim().isNotEmpty()) {
                     Icon(
-                        Icons.Filled.Clear , tint = Color.Black,
+                        Icons.Filled.Clear , tint = Color.White,
                         contentDescription = "clear text",
                         modifier = Modifier
                             .padding(end = 16.dp)
@@ -69,7 +70,7 @@ fun SearchBar(onTextChanged: (String) -> Unit,popBackStack: () -> Boolean) {
                     )
                 } else {
                     Icon(
-                        Icons.Filled.Search , tint = Color.Black,
+                        Icons.Filled.Search , tint = Color.White,
                         contentDescription = "search",
                         modifier = Modifier
                             .padding(end = 16.dp)

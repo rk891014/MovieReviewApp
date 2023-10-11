@@ -15,12 +15,13 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Boy
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,7 +39,9 @@ import com.example.tweetapp.model.artist.Cast
 import com.example.tweetapp.model.movies.MovieData
 import com.example.tweetapp.model.movies.Result
 import com.example.tweetapp.repository.DataState
+import com.example.tweetapp.screens.generalscreens.FailureImage
 import com.example.tweetapp.screens.generalscreens.MovieItemView
+import com.example.tweetapp.ui.component.ShowLoader
 import com.example.tweetapp.ui.component.SubtitlePrimary
 import com.example.tweetapp.ui.component.SubtitleSecondary
 import com.example.tweetapp.utils.AppConstant
@@ -56,12 +59,10 @@ import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 fun MovieInfoScreen(navController: NavHostController, movieId: Int?) {
 
     val movieInfoViewModel = hiltViewModel<MovieInfoViewModel>()
-    val loaderVisibleState = remember { mutableStateOf(true) }
-//    ShowLoader(isLoaderVisible = loaderVisibleState)
-
     val movieDetail = movieInfoViewModel.movieDetail
     val recommendedMovie = movieInfoViewModel.recommendedMovie
     val artist = movieInfoViewModel.artist
+    ShowLoader(movieDetail.value)
 
     LaunchedEffect(key1 = Unit){
         movieId?.let {
@@ -126,6 +127,7 @@ fun ArtistItemView(navController: NavHostController, artist: Cast) {
                 .height(100.dp)
                 .width(100.dp)
                 .clip(RoundedCornerShape(50)),
+            failure = { Icon(imageVector = Icons.Filled.Boy, tint = Color.Blue.copy(.5f), contentDescription = "body")},
             imageModel = { AppConstant.IMAGE_URL.plus(artist.profile_path) },
             imageOptions = ImageOptions(
                 contentScale = ContentScale.Crop,
@@ -171,6 +173,7 @@ fun ShowMovieInfoData(movie: DataState<Result>) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(350.dp),
+                failure = {FailureImage(item = movie.data)},
                 imageModel = { AppConstant.IMAGE_URL.plus(movie.data.poster_path) },
                 imageOptions = ImageOptions(
                     contentScale = ContentScale.Crop,

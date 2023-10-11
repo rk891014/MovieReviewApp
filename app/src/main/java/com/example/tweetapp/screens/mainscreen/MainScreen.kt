@@ -1,7 +1,9 @@
 package com.example.tweetapp.screens.mainscreen
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -26,7 +28,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.example.tweetapp.MainActivity
 import com.example.tweetapp.model.moviegenre.Genre
 import com.example.tweetapp.model.moviegenre.MovieGenres
 import com.example.tweetapp.navigation.AppNavigation
@@ -49,8 +50,7 @@ fun MainScreen() {
     val genreList = remember { mutableStateOf(arrayListOf<Genre>()) }
 
 
-    val loaderVisibleState = remember { mutableStateOf(false) }
-    ShowLoader(isLoaderVisible = loaderVisibleState)
+//    val loaderVisibleState = remember { mutableStateOf(false) }
 
     LaunchedEffect(key1 = Unit){
         movieViewModel.getMovieGenreList()
@@ -81,7 +81,7 @@ fun ScaffoldFunc(
         scaffoldState = scaffoldState, topBar = {
             when(currentScreen){
                 NavigationScreen.MainScreen.route->{
-                    HomeAppBar(title = (GetGenreName.getGenres()?.get(genreId.value) ?: "All Videos"),Icons.Filled.Menu) {
+                    HomeAppBar(title = (GetGenreName.getGenres().get(genreId.value) ?: "All Videos"),Icons.Filled.Menu) {
                         scope.launch {
                             scaffoldState.drawerState.apply {
                                 if (isClosed) open() else close()
@@ -104,6 +104,7 @@ fun ScaffoldFunc(
         drawerContent = {
             Column(modifier = Modifier.padding(20.dp)) {
                 Text(text = "Movie Types", fontSize = 24.sp)
+                Spacer(modifier = Modifier.size(16.dp))
                 DrawerBody(genreList) {
                     genreId.value = it
                     scope.launch {
@@ -114,14 +115,15 @@ fun ScaffoldFunc(
         },
         floatingActionButton = {
             if(currentScreen == NavigationScreen.MainScreen.route) {
-                FloatingActionButton(onClick = {}, backgroundColor = Color.Yellow) {
+                FloatingActionButton(onClick = {}, backgroundColor = Color.Blue.copy(red = 0.5f)) {
                     IconButton(onClick = { navController.navigate(NavigationScreen.SearchScreen.route) }) {
-                        Icon(Icons.Filled.Search, contentDescription = "menu",)
+                        Icon(Icons.Filled.Search, tint = Color.White, contentDescription = "menu",)
                     }
                 }
             }
         }
     ) {
+        ShowLoader(movieViewModel.genreList.value)
         LaunchedEffect(key1 = genreId.value){
             movieViewModel.moviePagingList(genreId.value)
         }

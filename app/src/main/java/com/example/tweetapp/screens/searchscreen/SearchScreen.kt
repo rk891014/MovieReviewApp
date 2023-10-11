@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ContentPasteSearch
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -55,14 +56,32 @@ fun ShowMovieList(
     navController: NavHostController,
     movies: List<Result>
 ) {
-    LazyColumn(modifier = Modifier
-        .padding(top = 60.dp)
-        .background(Color.White)) {
-        items(movies){
-            Box() {
-                SearchedMovieItem(it,navController)
+    if (movies.isEmpty()) {
+        ShowEmptyList()
+    } else {
+        LazyColumn(
+            modifier = Modifier
+                .padding(top = 60.dp)
+                .background(Color.White)
+        ) {
+            items(movies) {
+                Box() {
+                    SearchedMovieItem(it, navController)
+                }
             }
         }
+    }
+}
+
+@Composable
+fun ShowEmptyList() {
+    Column (horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.padding(top = 60.dp).fillMaxWidth()){
+        Spacer(modifier = Modifier.size(180.dp))
+        Icon(Icons.Filled.ContentPasteSearch, tint = Color.Blue,
+            contentDescription = "Empty", modifier = Modifier.size(48.dp))
+        Spacer(modifier = Modifier.size(20.dp))
+        Text(text = "Nothing To Show", color = Color.Black)
     }
 }
 
@@ -70,11 +89,14 @@ fun ShowMovieList(
 fun SearchedMovieItem(movie: Result, navController: NavHostController) {
     var genres = ""
     movie.genre_ids.forEach {
-        genres += (GetGenreName.getGenres()?.get(it) + "   ")
+        genres += (GetGenreName.getGenres().get(it) + "   ")
     }
-        Row(modifier = Modifier.fillMaxWidth().padding(12.dp,6.dp,2.dp,6.dp).clickable {
-            navController.navigate(NavigationScreen.MovieInfoScreen.route.plus("/${movie.id}"))
-        }) {
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .padding(12.dp, 6.dp, 2.dp, 6.dp)
+            .clickable {
+                navController.navigate(NavigationScreen.MovieInfoScreen.route.plus("/${movie.id}"))
+            }) {
             CoilImage(navController = navController, item = movie, imageHeight = 150.dp, imageWidth = 120.dp)
             Column(modifier = Modifier.padding(vertical = 4.dp, horizontal = 25.dp)) {
                 movie.title?.let {
@@ -92,46 +114,3 @@ fun SearchedMovieItem(movie: Result, navController: NavHostController) {
             }
         }
 }
-
-//movie.data.title?.let {
-//    Text(
-//        text = it,
-//        modifier = Modifier.padding(top = 10.dp),
-//        color = Color.Black,
-//        fontSize = 24.sp,
-//        fontWeight = FontWeight.W700,
-//        maxLines = 1,
-//        overflow = TextOverflow.Ellipsis
-//    )
-//}
-//Row(
-//modifier = Modifier
-//.fillMaxWidth()
-//.padding(bottom = 10.dp, top = 10.dp)
-//) {
-//
-//    Column(Modifier.weight(1f)) {
-//        SubtitlePrimary(movie.data.original_language)
-//        SubtitleSecondary("Language")
-//    }
-//    Column(Modifier.weight(1f)) {
-//        SubtitlePrimary(movie.data.vote_average.roundTo(1).toString())
-//        SubtitleSecondary("Rating")
-//    }
-//    Column(Modifier.weight(1f)) {
-//        SubtitlePrimary(movie.data.runtime.hourMinutes())
-//        SubtitleSecondary("Duration")
-//    }
-//    Column(Modifier.weight(1f)) {
-//        SubtitlePrimary( movie.data.release_date)
-//        SubtitleSecondary("Release Date")
-//    }
-//}
-//Text(
-//text = "Description",
-//color = Color.Black,
-//fontSize = 18.sp,
-//fontWeight = FontWeight.SemiBold
-//)
-
-

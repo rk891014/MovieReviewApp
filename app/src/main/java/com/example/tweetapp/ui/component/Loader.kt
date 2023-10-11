@@ -21,9 +21,29 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.unit.dp
+import com.example.tweetapp.repository.DataState
 
 @Composable
-fun ShowLoader(isLoaderVisible: MutableState<Boolean>) {
+fun ShowLoader(showLoader: DataState<Any>?){
+    val isLoaderVisible = remember { mutableStateOf(false) }
+    when (showLoader) {
+        is DataState.Success<Any> -> {
+            isLoaderVisible.value = false
+        }
+        is DataState.Error -> {
+            isLoaderVisible.value = false
+        }
+        is DataState.Loading -> {
+            isLoaderVisible.value = true
+        }
+        else -> {
+            isLoaderVisible.value = true
+        }
+    }
+    LoaderShowing(isLoaderVisible = isLoaderVisible)
+}
+@Composable
+fun LoaderShowing(isLoaderVisible: MutableState<Boolean>) {
     if(isLoaderVisible.value) {
         val angle = remember { mutableStateOf(0) }
         Column(
@@ -35,7 +55,7 @@ fun ShowLoader(isLoaderVisible: MutableState<Boolean>) {
         ) {
             Image(
                 imageVector = Icons.Filled.Refresh,
-                colorFilter = ColorFilter.tint(Color.Red),
+                colorFilter = ColorFilter.tint(Color.Blue.copy(alpha = 0.7f)),
                 contentDescription = "", modifier = Modifier
                     .clip(RoundedCornerShape(5.dp))
                     .size(40.dp)

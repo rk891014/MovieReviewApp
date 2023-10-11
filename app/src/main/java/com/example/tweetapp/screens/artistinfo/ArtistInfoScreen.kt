@@ -25,6 +25,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.tweetapp.model.artistdetails.ArtistDetail
 import com.example.tweetapp.repository.DataState
+import com.example.tweetapp.ui.component.ShowLoader
 import com.example.tweetapp.ui.component.SubtitlePrimary
 import com.example.tweetapp.ui.component.SubtitleSecondary
 import com.example.tweetapp.utils.AppConstant
@@ -36,11 +37,11 @@ import com.skydoves.landscapist.components.rememberImageComponent
 import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 
 @Composable
-fun ArtistInfoScreen(navController: NavHostController, artistId: Int?) {
+fun ArtistInfoScreen(artistId: Int?) {
 
     val artistViewModel = hiltViewModel<ArtistInfoViewModel>()
     val artistDetails = artistViewModel.artistDetails
-
+    ShowLoader(showLoader = artistDetails.value)
     LaunchedEffect(key1 = Unit){
         artistViewModel.getArtistDetails(artistId)
     }
@@ -70,7 +71,7 @@ fun ArtistDetails(artistDetails: DataState<ArtistDetail>) {
                     modifier = Modifier
                         .fillMaxWidth(0.5f)
                         .height(270.dp)
-                        .padding(0.dp,20.dp,0.dp,0.dp)
+                        .padding(0.dp, 20.dp, 0.dp, 0.dp)
                         .clip(RoundedCornerShape(10.dp)),
                     imageModel = {  AppConstant.IMAGE_URL.plus(artistDetails.data.profilePath) },
                     imageOptions = ImageOptions(
